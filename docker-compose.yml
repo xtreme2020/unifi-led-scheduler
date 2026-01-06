@@ -1,0 +1,22 @@
+services:
+  unifi-led-scheduler:
+    image: ghcr.io/xtreme2020/unifi-led-scheduler:latest
+    container_name: unifi-led-scheduler
+    restart: unless-stopped
+    environment:
+      - TZ=America/New_York
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/var/log
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"      # Maximum size of each log file
+        max-file: "3"
+    networks:
+      - unifi-network
+
+networks:
+  unifi-network:
+    driver: bridge
